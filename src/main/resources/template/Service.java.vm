@@ -1,0 +1,22 @@
+package ${package}.service.${moduleName};
+
+import org.springframework.data.domain.Page;
+import com.naen.db.dao.user.${className}DO;
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+ 
+public interface ${className}Service {
+
+	Page<${className}DO> search${className}(int page, int size, String keyword) ;
+	
+	void delete${className}(long id);
+	
+	long save${className}(${className}DO dao);
+
+}

@@ -1,0 +1,60 @@
+package ${package}.service.${moduleName}.impl;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
+
+import com.naen.db.dao.${moduleName}.${className}DO;
+import com.naen.db.${moduleName}.${className}Repository;
+import com.naen.service.${moduleName}.${className}Service;
+
+@Service
+public class ${className}ServiceImpl implements ${className}Service {
+
+	@Autowired
+	private ${className}Repository ${classname}Repository;
+
+	@Override
+	public Page<${className}DO> search${className}(int page, int count, String keyword) {
+		Pageable pageable = new PageRequest(page - 1, count, new Sort(Direction.DESC, "id"));
+		
+		Specification<${className}DO> spec = new Specification<${className}DO>() {
+			@Override    
+		    public Predicate toPredicate(Root<${className}DO> root, CriteriaQuery<?> query,CriteriaBuilder cb) { 
+		    	/*
+				Path<String> nick = root.get("nick");
+				Path<String> loginName = root.get("loginName");
+				Predicate p1 = cb.like(nick, "%"+keyword+"%");
+				Predicate p2 = cb.like(loginName, "%"+keyword+"%");
+				Predicate p = cb.or(p1, p2); 
+				return p;*/
+				return null;
+				}
+			}; 
+		
+		return ${classname}Repository.findAll(spec, pageable);
+	}
+
+	@Override
+	public void delete${className}(long id) {
+		${classname}Repository.delete(id);
+	}
+
+	@Override
+	public long save${className}(${className}DO dao) {
+		${className}DO saved = ${classname}Repository.saveAndFlush(dao);
+		return saved.getId();
+	}
+
+}

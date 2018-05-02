@@ -1,0 +1,174 @@
+#macro(scope)$scope##
+#end
+#macro(uibModal)$uibModal##
+#end
+angular.module('AESApp').controller('${className}Ctrl', ['#scope()', '$timeout','$window','$rootScope','$uibModal','toastr','$filter',
+                'Session','${className}Service','USER_ROLES', function(#scope(), $timeout,$window,$rootScope,$uibModal,toastr,$filter,
+		Session,${className}Service,USER_ROLES) {
+	
+	#scope().searchResult = [];
+	#scope().page = 1;
+	#scope().pageSize = 20;
+	#scope().keyword = "";
+	
+	#scope().search${className} = function(){
+		$rootScope.viewContentLoading = true;
+		${className}Service.search${className}(#scope().page, #scope().pageSize, #scope().keyword)
+		.then(
+			function _success(response) {
+				$rootScope.viewContentLoading = false;
+
+				#scope().searchResult = response;
+				
+			}, function _error(error) {
+				$rootScope.viewContentLoading = false;
+
+				toastr.error("", $filter('translate')('MESSAGE.ACCOUNT_GET_FAILED'));
+			});
+	}
+	
+	#scope().search${className}();
+	
+	#scope().toPage = function(pageNo){
+		console.log("pageNo = "+ pageNo);
+		if(pageNo) {
+			#scope().page = pageNo;
+		}
+		#scope().search${className}();
+	}
+	
+	#scope().openDelete${className}Modal = function(${classname}){
+		
+		var modalInstance = #uibModal().open({
+			templateUrl : 'views/modals/confirm.html',
+			controller : '${classname}DeleteCtrl', 
+			size : 'md',
+			resolve : {
+				${classname} : ${classname} 
+			}
+		});
+		modalInstance.result.then(function(updatedDevice) {
+			toastr.success("",$filter('translate')('MESSAGE.DELETE_SUCCESS'));
+			#scope().search${className}();
+		});
+	}
+	
+	#scope().openAdd${className}Modal = function(index,selected${className}) {
+		var modalInstance = #uibModal().open({
+			templateUrl : 'views/modals/${classname}Save.html',
+			controller : '${classname}AddModalCtrl', 
+			size : 'md',
+			resolve : {
+				${classname} : function () {
+					if(index>=0 && selected${className}){
+						return selected${className};
+					}else{
+						return null;
+					}
+				},
+			}
+		});
+		// modal return result
+		modalInstance.result.then(function(saved) {
+			#scope().search${className}();
+			
+		});
+	}
+	
+}])
+.controller('${classname}DeleteCtrl', ['#scope()','$rootScope','$uibModalInstance','$filter','toastr', '${className}Service','${classname}', function(#scope(),$rootScope,$uibModalInstance,$filter,toastr, ${className}Service,${classname}) {
+	
+	#scope().title = '删除${tableNameCN}';
+	#scope().message = '确定要删除吗？';
+	#scope().confirmText = '删除';
+	#scope().cancelText = '取消';
+	
+	#scope().deleteButtonStatus = 1;
+	#scope().errorMsg = '';
+
+	#scope().confirm = function() {
+		$rootScope.viewContentLoading = true;
+
+		#scope().deleteButtonStatus = 0;
+		${className}Service.delete${className}(${classname}.id).then(
+				function (){
+					$rootScope.viewContentLoading = false;
+					
+					#scope().deleteButtonStatus = 1;
+					$uibModalInstance.close();
+				},
+				function _error(error){
+					$rootScope.viewContentLoading = false;
+
+					#scope().deleteButtonStatus = 1;
+					$uibModalInstance.close(error);
+				}
+		);
+	};
+	// cancel click
+	#scope().cancel = function() {
+		$uibModalInstance.dismiss('cancel');
+	}
+}])
+
+.controller('${classname}AddModalCtrl', ['#scope()','$rootScope','$uibModalInstance','${className}Service','toastr','$filter', '${classname}','USER_ROLES','Session', function(#scope(),$rootScope,$uibModalInstance,${className}Service,toastr,$filter, ${classname},USER_ROLES,Session) {
+	#scope().addButtonStatus = 1;
+
+	#scope().profile = {
+			id			: -1,
+			nick  : '',
+			loginName 	: '',
+			password	:'',
+			password2	:''
+		}
+	#scope().errorMsg = '';
+	#scope().isEdit = !!${classname};
+	
+	
+	#scope().formInvalid = function(){
+		return #scope().addButtonStatus==0;
+	}
+	
+	if(#scope().isEdit){
+		#scope().profile = {
+				#foreach ($column in $columns)
+				$column.attrname: ${classname}.$column.attrname,
+				#end
+		}
+
+	}
+	
+
+	#scope().save${className}= function(){
+		$rootScope.viewContentLoading = true;
+
+		#scope().addButtonStatus = 0;
+		
+
+		${className}Service.save${className}(#scope().profile)
+		.then(
+			function _success(response) {
+					$rootScope.viewContentLoading = false;
+					#scope().addButtonStatus = 1;
+					if(response.status == "SUCCESS") {
+						$uibModalInstance.close(response);
+					} else {
+						#scope().errorMsg = response.message;
+					}
+					
+					
+			}, 
+			function _error(error) {
+					$rootScope.viewContentLoading = false;
+
+					toastr.error("", $filter('translate')("MESSAGE.ACCOUNT_ADD_FAILED") + ': '+  error);
+					#scope().addButtonStatus = 1;
+			});
+	
+	}
+
+	// cancel click
+	#scope().cancel = function() {
+		$uibModalInstance.dismiss('cancel');
+	}
+}])

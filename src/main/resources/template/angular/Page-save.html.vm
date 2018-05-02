@@ -1,0 +1,36 @@
+<div class="modal-header">
+	<h3 class="modal-title">{{isEdit? ("${classNameUppercase}.TITLE.EDIT" | translate)
+		: ("${classNameUppercase}.TITLE.ADD" | translate)}}</h3>
+</div>
+<div class="modal-body">
+	<div class="alert alert-danger" ng-show="errorMsg">
+		{{errorMsg}}</div>
+	<form class="form-horizontal" role="form">
+
+#foreach ($column in $columns)
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right"
+				for="form-field-1"> {{"${classNameUppercase}.$column.attrNameUppercase"|translate}}</label>
+			<div class="col-sm-9">
+				<input type="text" id="$column.attrname" 
+					class="col-xs-10 col-sm-9" ng-model="::profile.$column.attrname" />
+			</div>
+
+		</div>
+#end
+		
+		
+		
+	</form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-white btn-default btn-round" type="button"
+		ng-Click="save${className}()" ng-disabled="formInvalid()">
+		<i class="ace-icon fa fa-check bigger-110"></i> {{ addButtonStatus ==
+		0 ? ("SAVING" | translate):("SAVE" | translate)}}
+	</button>
+	<button class="btn btn-white btn-default btn-round" type="button"
+		ng-Click="cancel()">
+		</i> {{"BUTTON_CANCEL" | translate}}
+	</button>
+</div>

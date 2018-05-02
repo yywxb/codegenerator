@@ -1,0 +1,11 @@
+package ${package}.db.${moduleName};
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
+import com.naen.db.dao.${moduleName}.${className}DO;
+
+public interface ${className}Repository  extends JpaSpecificationExecutor<${className}DO>,JpaRepository<${className}DO, Long>{
+
+	
+}

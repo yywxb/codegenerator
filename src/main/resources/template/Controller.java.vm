@@ -1,0 +1,89 @@
+package ${package}.rest.apis.${moduleName};
+
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.naen.common.util.MD5Util;
+import com.naen.db.dao.${moduleName}.${className}DO;
+import com.naen.rest.protocol.BaseQueryReq;
+import com.naen.rest.protocol.BaseQueryResp;
+import com.naen.rest.protocol.BaseResponse;
+import com.naen.service.${moduleName}.${className}Service;
+import com.naen.service.${moduleName}.dto.${className}DTO;
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+
+@RestController
+@RequestMapping("/api/v1/${moduleName}")
+public class ${className}Controller { 
+
+	@Autowired
+	private ${className}Service ${classname}Service;
+
+	@RequestMapping(value = "/${classname}", method = RequestMethod.GET)
+	public BaseResponse search${className}(BaseQueryReq req) {
+		BaseQueryResp<${className}DTO> resp = new BaseQueryResp<${className}DTO>();
+		System.err.println(req);
+		Page<${className}DO> accounts = ${classname}Service.search${className}(req.getPage(), req.getPageSize(), req.getKeyword());
+		if (accounts != null && accounts.getSize() > 0) {
+			List<${className}DTO> list = new ArrayList<${className}DTO>();
+			for (${className}DO dao : accounts.getContent()) {
+				${className}DTO dto = ${className}DTO.fromDO(dao);
+				list.add(dto); 
+			}
+			resp.setTotalNumbers((int) accounts.getTotalElements());
+			resp.setTotalPages(accounts.getTotalPages());
+			resp.setEntities(list);
+			
+		} 
+		resp.setPage(req.getPage());
+		resp.setPageSize(req.getPageSize());
+		return resp;
+	}
+
+	@RequestMapping(value = "/${classname}", method = RequestMethod.POST)
+	public BaseResponse create${className}(@RequestBody ${className}DTO req) {
+		${className}DO dao = ${className}DTO.toDO(req);
+		dao.setCreated(new Date());
+		dao.setUpdated(new Date());
+		${classname}Service.save${className}(dao);
+		return BaseResponse.buildSuccessResponse("OK");
+
+	}
+
+	//@RequiresRoles("${classname}")
+	@RequestMapping(value = "/${classname}/{${classname}Id}", method = RequestMethod.PUT)
+	public BaseResponse update${className}(@PathVariable long ${classname}Id, @RequestBody ${className}DTO req) {
+		${className}DO dao = ${className}DTO.toDO(req);
+		dao.setUpdated(new Date());
+		${classname}Service.save${className}(dao);
+		return BaseResponse.buildSuccessResponse("OK");
+	}
+
+	@RequestMapping(value = "/${classname}/{${classname}Id}", method = RequestMethod.DELETE)
+	public BaseResponse delete(@PathVariable long ${classname}Id) {
+
+		${classname}Service.delete${className}(${classname}Id);
+		return BaseResponse.buildSuccessResponse("OK");
+	}
+
+}
+
+
+

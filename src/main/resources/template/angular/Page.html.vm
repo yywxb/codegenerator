@@ -1,0 +1,77 @@
+
+
+<div class="page-header">
+	<div class=row>
+		<div class="col-sm-4">
+			<h1>{{"${classNameUppercase}.TITLE"| translate}}
+				
+
+			</h1>
+			
+		</div>
+	
+		<div class="col-sm-8 text-right">
+			
+		</div>
+	</div>
+
+
+</div>
+
+<div class=container-fluid>
+	<div class=row>
+		<div class=col-sm-8>
+			<form class="form-inline">
+			  <div class="form-group">
+			    <label for="exampleInputName2">{{"LABEL.SEARCH_KEYWORD"| translate}}</label>
+			    <input type="text" class="form-control" id="exampleInputName2" ng-model="keyword" placeholder="">
+			  </div>
+			  <button type="submit" class="btn btn-sm btn-default" ng-click='query${className}()'><span class="fa fa-search"></span>{{"BUTTON_QUERY"| translate}}</button>
+			</form>
+		</div>
+		<div class="col-sm-4 text-right">
+			<button type="submit" class="btn btn-sm btn-primary" ng-click='openAdd${className}Modal(-1,null)'><span class="fa fa-plus"></span> {{"BUTTON_ADD"| translate}}</button>
+		</div>
+	</div>
+	
+	
+	<br>
+	<table class="table">
+      
+      <thead>
+        <tr>
+          #foreach ($column in $columns)
+	         <th>{{"${classNameUppercase}.$column.attrNameUppercase"|translate}}</th>
+		  #end
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="${classname} in searchResult.entities">
+          #foreach ($column in $columns)
+             <td>{{${classname}.$column.attrname}}</td>
+	  
+		  #end
+
+          <td>
+          	<div class="hidden-sm hidden-xs action-buttons">
+				<a class="green" ng-click='openAdd${className}Modal($index,${classname})'>
+					<i class="ace-icon fa fa-pencil bigger-130"></i>
+				</a>
+
+				<a class="red"  ng-click="openDelete${className}Modal(${classname})">
+					<i class="ace-icon fa fa-trash-o bigger-130"></i>
+				</a>
+			</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+	
+	
+	<div class="text-right">
+		<ul uib-pagination total-items="searchResult.totalNumbers" ng-model="page" items-per-page="pageSize" max-size="5" class="pagination-sm" 
+			boundary-link-numbers="true" ng-change="toPage()" previous-text="{{'BUTTON.PAGE_PREVIOUS' | translate}}" next-text="{{'BUTTON.PAGE_NEXT' | translate}}"></ul>
+	</div>
+
+</div>

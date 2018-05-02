@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>代码生成器</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<link rel="stylesheet" href="css/main.css">
+<script src="libs/jquery.min.js"></script>
+<script src="plugins/layer/layer.js"></script>
+<script src="libs/bootstrap.min.js"></script>
+<script src="libs/vue.min.js"></script>
+<script src="plugins/jqgrid/grid.locale-cn.js"></script>
+<script src="plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="js/common.js"></script>
+</head>
+<body>
+<div id="rrapp">
+	<div class="grid-btn">
+		<div class="form-group col-sm-2">
+			<input type="text" class="form-control" v-model="q.tableName" placeholder="表名">
+		</div>
+		<div class="form-group col-sm-1">
+			<input type="text" class="form-control" v-model="q.tablePrefix" placeholder="表前缀">
+		</div>
+		<div class="form-group col-sm-1">
+			<input type="text" class="form-control" v-model="q.tableNameCN" placeholder="中文名（例如用户）">
+		</div>
+		<div class="form-group col-sm-1">
+			<input type="text" class="form-control" v-model="q.moduleName" placeholder="模块名">
+		</div>
+		<a class="btn btn-primary" @click="generator"><i class="fa fa-file-code-o"></i>&nbsp;生成代码</a>
+	</div>
+	
+	<div class=row>
+		<ul class="nav nav-tabs">
+		  <li role="presentation" v-bind:class="{ active: q.part=='DO' }"><a  @click="changePart('DO')">DO</a></li>
+		  <li role="presentation" v-bind:class="{ active: q.part=='DTO' }"><a  @click="changePart('DTO')">DTO</a></li>
+			
+			
+			<li role="presentation" v-bind:class="{ active: q.part=='Repository' }"><a  @click="changePart('Repository')">Repository</a></li>
+			<li role="presentation" v-bind:class="{ active: q.part=='Service' }"><a  @click="changePart('Service')">Service</a></li>
+			<li role="presentation" v-bind:class="{ active: q.part=='ServiceImpl' }"><a  @click="changePart('ServiceImpl')">ServiceImpl</a></li>
+			<li role="presentation" v-bind:class="{ active: q.part=='Controller' }"><a  @click="changePart('Controller')">Controller</a></li>
+			<li role="presentation" v-bind:class="{ active: q.part=='Page' }"><a  @click="changePart('Page')">Page</a></li>
+			<li role="presentation" v-bind:class="{ active: q.part=='Page-save' }"><a  @click="changePart('Page-save')">Page-save</a></li>
+			<li role="presentation" v-bind:class="{ active: q.part=='JS' }"><a  @click="changePart('JS')">JS</a></li>
+			<li role="presentation" v-bind:class="{ active: q.part=='JS-service' }"><a  @click="changePart('JS-service')">JS-service</a></li>
+			<li role="presentation" v-bind:class="{ active: q.part=='Router' }"><a  @click="changePart('Router')">Router</a></li>
+			<li role="presentation" v-bind:class="{ active: q.part=='i18n' }"><a  @click="changePart('i18n')">i18n</a></li>
+		  
+		</ul>
+	</div>
+	<div class=row>
+		<textarea rows="30" style="width:100%" v-model="q.result"></textarea>
+	</div>
+</div>
+
+<script src="js/generator.js"></script>
+</body>
+</html>

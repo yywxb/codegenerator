@@ -1,0 +1,72 @@
+#macro(rootScope)$rootScope##
+#end
+
+angular.module('AESApp').service('${className}Service', ['$rootScope','$q','Session','REST_URLS', function($rootScope,$q,Session,REST_URLS) {
+
+
+	
+	this.search${className} = function(page, pageSize, keyword) {
+		return #rootScope().restCall({
+					method : 'GET',
+					data : {page:page, pageSize:pageSize, keyword:keyword},
+					url : REST_URLS.${moduleName} + "/${classname}?page=" + page + "&pageSize=" + pageSize + "&keyword=" + keyword
+				}).then( 
+				function _success(response) {
+					console.log("response"+ angular.toJson(response));
+					return response.data;
+				});						
+	}	
+	
+	this.delete${className} = function(id) {
+		return #rootScope().restCall({
+					method : 'DELETE',
+					url:     REST_URLS.${moduleName} + "/${classname}/" + id
+				}).then(
+				function _success(response) {
+					console.log("response"+ angular.toJson(response));
+					return response.data;
+				});						
+	}	
+	
+	this.save${className} = function(${classname}){
+
+		console.log("response"+ angular.toJson(${classname}));
+		if(${classname}.id > 0) {
+			return this.update${className}(${classname});
+		} else {
+			return this.create${className}(${classname});
+		}
+		
+	}
+	
+	this.create${className} = function(${classname}){
+
+		console.log("response"+ angular.toJson(${classname}));
+		return #rootScope().restCall({
+			method: 'POST',
+			data:${classname},
+			url: REST_URLS.${moduleName} + "/${classname}"
+		}).then(
+				function _success(response) {
+					console.log("response"+ angular.toJson(response));
+					return response.data;
+		});
+		
+	}
+	
+	this.update${className} = function(${classname}){
+
+		console.log("response"+ angular.toJson(${classname}));
+		return #rootScope().restCall({
+			method: 'PUT',
+			data:${classname},
+			url: REST_URLS.${moduleName} + "/${classname}/" + ${classname}.id
+		}).then(
+				function _success(response) {
+					console.log("response"+ angular.toJson(response));
+					return response.data;
+		});
+		
+	}
+
+}]);
