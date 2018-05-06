@@ -15,8 +15,8 @@ public interface ${className}Service {
 
 	Page<${className}DO> search${className}(int page, int size, String keyword) ;
 	
-	void delete${className}(long id);
+	void delete${className}(${idType} id);
 	
-	long save${className}(${className}DO dao);
+	${idType} save${className}(${className}DO dao);
 
 }

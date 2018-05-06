@@ -26,7 +26,7 @@
 			    <label for="exampleInputName2">{{"LABEL.SEARCH_KEYWORD"| translate}}</label>
 			    <input type="text" class="form-control" id="exampleInputName2" ng-model="keyword" placeholder="">
 			  </div>
-			  <button type="submit" class="btn btn-sm btn-default" ng-click='query${className}()'><span class="fa fa-search"></span>{{"BUTTON_QUERY"| translate}}</button>
+			  <button type="submit" class="btn btn-sm btn-default" ng-click='search${className}()'><span class="fa fa-search"></span>{{"BUTTON_QUERY"| translate}}</button>
 			</form>
 		</div>
 		<div class="col-sm-4 text-right">
@@ -49,11 +49,10 @@
       <tbody>
         <tr ng-repeat="${classname} in searchResult.entities">
           #foreach ($column in $columns)
-             <td>{{${classname}.$column.attrname}}</td>
-	  
+             <td>{{${classname}.$column.attrname #if($column.columnName == 'updated' || $column.columnName == 'created')|date:"yyyy-MM-dd HH:mm"#end}}</td>
 		  #end
 
-          <td>
+          <td class="text-right">
           	<div class="hidden-sm hidden-xs action-buttons">
 				<a class="green" ng-click='openAdd${className}Modal($index,${classname})'>
 					<i class="ace-icon fa fa-pencil bigger-130"></i>

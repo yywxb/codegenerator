@@ -68,6 +68,7 @@ public class GenUtils {
         tableEntity.setClassNameUppercase(className.toUpperCase());
         tableEntity.setTableNameCN(tableNameCN);
         //列信息
+        String idType = "Long";
         List<ColumnEntity> columsList = new ArrayList<>();
         for(Map<String, String> column : columns){
             ColumnEntity columnEntity = new ColumnEntity();
@@ -83,6 +84,7 @@ public class GenUtils {
 
             //列的数据类型，转换成Java类型
             String attrType = config.getString(columnEntity.getDataType(), "unknowType" );
+            
             columnEntity.setAttrType(attrType);
             if (!hasBigDecimal && attrType.equals("BigDecimal" )) {
                 hasBigDecimal = true;
@@ -92,7 +94,9 @@ public class GenUtils {
                 tableEntity.setPk(columnEntity);
             }
             columnEntity.setAttrNameUppercase(attrName.toUpperCase());
-
+            if(columnEntity.getColumnName().equals("id")) {
+            	idType = attrType;
+            }
             columsList.add(columnEntity);
         }
         tableEntity.setColumns(columsList);
@@ -125,6 +129,7 @@ public class GenUtils {
         map.put("moduleName", moduleName);
         map.put("author", config.getString("author" ));
         map.put("email", config.getString("email" ));
+        map.put("idType", idType);
         map.put("datetime", format(new Date(), "yyyy-MM-dd HH:mm:ss"));
         VelocityContext context = new VelocityContext(map);
 

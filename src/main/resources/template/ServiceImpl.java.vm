@@ -47,12 +47,12 @@ public class ${className}ServiceImpl implements ${className}Service {
 	}
 
 	@Override
-	public void delete${className}(long id) {
+	public void delete${className}(${idType} id) {
 		${classname}Repository.delete(id);
 	}
 
 	@Override
-	public long save${className}(${className}DO dao) {
+	public ${idType} save${className}(${className}DO dao) {
 		${className}DO saved = ${classname}Repository.saveAndFlush(dao);
 		return saved.getId();
 	}

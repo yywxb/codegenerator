@@ -3,8 +3,8 @@
 #macro(uibModal)$uibModal##
 #end
 angular.module('AESApp').controller('${className}Ctrl', ['#scope()', '$timeout','$window','$rootScope','$uibModal','toastr','$filter',
-                'Session','${className}Service','USER_ROLES', function(#scope(), $timeout,$window,$rootScope,$uibModal,toastr,$filter,
-		Session,${className}Service,USER_ROLES) {
+                'Session','${className}Service', function(#scope(), $timeout,$window,$rootScope,$uibModal,toastr,$filter,
+		Session,${className}Service) {
 	
 	#scope().searchResult = [];
 	#scope().page = 1;
@@ -79,8 +79,8 @@ angular.module('AESApp').controller('${className}Ctrl', ['#scope()', '$timeout',
 .controller('${classname}DeleteCtrl', ['#scope()','$rootScope','$uibModalInstance','$filter','toastr', '${className}Service','${classname}', function(#scope(),$rootScope,$uibModalInstance,$filter,toastr, ${className}Service,${classname}) {
 	
 	#scope().title = '删除${tableNameCN}';
-	#scope().message = '确定要删除吗？';
-	#scope().confirmText = '删除';
+	#scope().message = '确定要删除吗';
+	#scope().confirmText = '确定';
 	#scope().cancelText = '取消';
 	
 	#scope().deleteButtonStatus = 1;
@@ -111,7 +111,7 @@ angular.module('AESApp').controller('${className}Ctrl', ['#scope()', '$timeout',
 	}
 }])
 
-.controller('${classname}AddModalCtrl', ['#scope()','$rootScope','$uibModalInstance','${className}Service','toastr','$filter', '${classname}','USER_ROLES','Session', function(#scope(),$rootScope,$uibModalInstance,${className}Service,toastr,$filter, ${classname},USER_ROLES,Session) {
+.controller('${classname}AddModalCtrl', ['#scope()','$rootScope','$uibModalInstance','${className}Service','toastr','$filter', '${classname}','Session', function(#scope(),$rootScope,$uibModalInstance,${className}Service,toastr,$filter, ${classname},Session) {
 	#scope().addButtonStatus = 1;
 
 	#scope().profile = {

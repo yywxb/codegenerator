@@ -69,7 +69,7 @@ public class ${className}Controller {
 
 	//@RequiresRoles("${classname}")
 	@RequestMapping(value = "/${classname}/{${classname}Id}", method = RequestMethod.PUT)
-	public BaseResponse update${className}(@PathVariable long ${classname}Id, @RequestBody ${className}DTO req) {
+	public BaseResponse update${className}(@PathVariable ${idType} ${classname}Id, @RequestBody ${className}DTO req) {
 		${className}DO dao = ${className}DTO.toDO(req);
 		dao.setUpdated(new Date());
 		${classname}Service.save${className}(dao);
@@ -77,7 +77,7 @@ public class ${className}Controller {
 	}
 
 	@RequestMapping(value = "/${classname}/{${classname}Id}", method = RequestMethod.DELETE)
-	public BaseResponse delete(@PathVariable long ${classname}Id) {
+	public BaseResponse delete(@PathVariable ${idType} ${classname}Id) {
 
 		${classname}Service.delete${className}(${classname}Id);
 		return BaseResponse.buildSuccessResponse("OK");
