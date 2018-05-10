@@ -2,5 +2,5 @@
 "${classNameUppercase}.TITLE.ADD":"新建${tableNameCN}",
 "${classNameUppercase}.TITLE.EDIT":"修改${tableNameCN}",
 #foreach ($column in $columns)
-"${classNameUppercase}.$column.attrNameUppercase":"$column.attrName",
+"${classNameUppercase}.$column.attrNameUppercase":"$column.comments",
 #end

@@ -8,7 +8,6 @@ angular.module('AESApp').service('${className}Service', ['$rootScope','$q','Sess
 	this.search${className} = function(page, pageSize, keyword) {
 		return #rootScope().restCall({
 					method : 'GET',
-					data : {page:page, pageSize:pageSize, keyword:keyword},
 					url : REST_URLS.${moduleName} + "/${classname}?page=" + page + "&pageSize=" + pageSize + "&keyword=" + keyword
 				}).then( 
 				function _success(response) {

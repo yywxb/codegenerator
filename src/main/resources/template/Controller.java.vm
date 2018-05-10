@@ -40,15 +40,15 @@ public class ${className}Controller {
 	public BaseResponse search${className}(BaseQueryReq req) {
 		BaseQueryResp<${className}DTO> resp = new BaseQueryResp<${className}DTO>();
 		System.err.println(req);
-		Page<${className}DO> accounts = ${classname}Service.search${className}(req.getPage(), req.getPageSize(), req.getKeyword());
-		if (accounts != null && accounts.getSize() > 0) {
+		Page<${className}DO> entities = ${classname}Service.search${className}(req.getPage(), req.getPageSize(), req.getKeyword());
+		if (entities != null && entities.getSize() > 0) {
 			List<${className}DTO> list = new ArrayList<${className}DTO>();
-			for (${className}DO dao : accounts.getContent()) {
+			for (${className}DO dao : entities.getContent()) {
 				${className}DTO dto = ${className}DTO.fromDO(dao);
 				list.add(dto); 
 			}
-			resp.setTotalNumbers((int) accounts.getTotalElements());
-			resp.setTotalPages(accounts.getTotalPages());
+			resp.setTotalNumbers((int) entities.getTotalElements());
+			resp.setTotalPages(entities.getTotalPages());
 			resp.setEntities(list);
 			
 		} 
