@@ -2,8 +2,8 @@
 #end
 #macro(uibModal)$uibModal##
 #end
-angular.module('AESApp').controller('${className}Ctrl', ['#scope()', '$timeout','$window','$rootScope','$uibModal','toastr','$filter',
-                'Session','${className}Service', function(#scope(), $timeout,$window,$rootScope,$uibModal,toastr,$filter,
+angular.module('AESApp').controller('${className}Ctrl', ['#scope()', '$stateParams','$timeout','$window','$rootScope','$uibModal','toastr','$filter',
+                'Session','${className}Service', function(#scope(), $stateParams,$timeout,$window,$rootScope,$uibModal,toastr,$filter,
 		Session,${className}Service) {
 	
 	#scope().searchResult = [];
@@ -12,17 +12,14 @@ angular.module('AESApp').controller('${className}Ctrl', ['#scope()', '$timeout',
 	#scope().keyword = "";
 	
 	#scope().search${className} = function(){
-		$rootScope.viewContentLoading = true;
+		//$rootScope.viewContentLoading = true;
 		${className}Service.search${className}(#scope().page, #scope().pageSize, #scope().keyword)
 		.then(
 			function _success(response) {
-				$rootScope.viewContentLoading = false;
-
+				//$rootScope.viewContentLoading = false;
 				#scope().searchResult = response;
-				
 			}, function _error(error) {
-				$rootScope.viewContentLoading = false;
-
+				//$rootScope.viewContentLoading = false;
 				toastr.error("", $filter('translate')('MESSAGE.ACCOUNT_GET_FAILED'));
 			});
 	}
@@ -116,10 +113,6 @@ angular.module('AESApp').controller('${className}Ctrl', ['#scope()', '$timeout',
 
 	#scope().profile = {
 			id			: -1,
-			nick  : '',
-			loginName 	: '',
-			password	:'',
-			password2	:''
 		}
 	#scope().errorMsg = '';
 	#scope().isEdit = !!${classname};

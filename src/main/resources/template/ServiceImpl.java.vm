@@ -57,4 +57,8 @@ public class ${className}ServiceImpl implements ${className}Service {
 		return saved.getId();
 	}
 
+	@Override
+	public ${className}DO findOne(Integer id) {
+		return ${classname}Repository.findOne(id);
+	}
 }

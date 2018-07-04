@@ -70,7 +70,12 @@ public class ${className}Controller {
 	//@RequiresRoles("${classname}")
 	@RequestMapping(value = "/${classname}/{${classname}Id}", method = RequestMethod.PUT)
 	public BaseResponse update${className}(@PathVariable ${idType} ${classname}Id, @RequestBody ${className}DTO req) {
-		${className}DO dao = ${className}DTO.toDO(req);
+		${className}DO dao = ${classname}Service.findOne(${classname}Id);
+		#foreach ($column in $columns)
+		#if($column.columnName != $pk.columnName && $column.columnName != 'updated' && $column.columnName != 'created')
+		dao.set${column.attrName}(req.get${column.attrName}());
+		#end
+		#end 
 		dao.setUpdated(new Date());
 		${classname}Service.save${className}(dao);
 		return BaseResponse.buildSuccessResponse("OK");

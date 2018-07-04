@@ -19,4 +19,5 @@ public interface ${className}Service {
 	
 	${idType} save${className}(${className}DO dao);
 
+	${className}DO findOne(Integer id);
 }

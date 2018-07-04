@@ -54,11 +54,11 @@
 
           <td class="text-right">
           	<div class="hidden-sm hidden-xs action-buttons">
-				<a class="green" ng-click='openAdd${className}Modal($index,${classname})'>
+				<a class="green" ng-click='openAdd${className}Modal($index,${classname})' data-toggle="tooltip" title="ÐÞ¸Ä">
 					<i class="ace-icon fa fa-pencil bigger-130"></i>
 				</a>
 
-				<a class="red"  ng-click="openDelete${className}Modal(${classname})">
+				<a class="red"  ng-click="openDelete${className}Modal(${classname})" data-toggle="tooltip" title="É¾³ý">
 					<i class="ace-icon fa fa-trash-o bigger-130"></i>
 				</a>
 			</div>

@@ -7,16 +7,12 @@
 		controller: '${className}Ctrl',
 		resolve: {
 			lazyLoad: ['$ocLazyLoad', function($ocLazyLoad) {
-			
 				return #ocLazyLoad().load([
 					{	
 						name: 'AESApp',	
 						files: ['js/services/${classname}.service.js','js/controllers/pages/${moduleName}/${classname}.js']
 					}
-	
 				]);
-				
 			}]
 		}
-		
       })
